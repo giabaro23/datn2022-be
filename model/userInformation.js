@@ -15,10 +15,10 @@ class userInformation {
         }
     }
     save(userInfo) {
-        let query = `INSERT INTO ${this.tableName} ("roleId","email","password","address","description","phoneNumber","firstName","lastName","isActive","createDate")
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+        let query = `INSERT INTO ${this.tableName} ("roleId","email","password","address","phoneNumber","firstName","lastName","isActive","createDate")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
 
-        let data = [userInfo.roleId, userInfo.email, userInfo.newPassword, userInfo.address, userInfo.description, userInfo.phoneNumber, userInfo.firstName, userInfo.lastName, userInfo.isActive, userInfo.createDate];
+        let data = [userInfo.roleId, userInfo.email, userInfo.newPassword, userInfo.address, userInfo.phoneNumber, userInfo.firstName, userInfo.lastName, userInfo.isActive, userInfo.createDate];
         return this.pool.query(query, data);
     }
 
@@ -36,7 +36,7 @@ class userInformation {
     }
 
     getUserInfoById(userInfo) {
-        let query = `SELECT "roleId","email","address","description","phoneNumber","firstName","lastName","isActive","createDate","avatar" FROM ${this.tableName} WHERE "id"=($1)`
+        let query = `SELECT "roleId","email","address","phoneNumber","firstName","lastName","isActive","createDate","avatar" FROM ${this.tableName} WHERE "id"=($1)`
         let data = [userInfo.id]
         return this.pool.query(query, data);
     }
@@ -44,14 +44,13 @@ class userInformation {
     updateProfile(userInfo) {
         let query = `UPDATE ${this.tableName} SET
                     "address" = ($1),
-                    "description" = ($2),
-                    "firstName" = ($3),
-                    "lastName" = ($4),
-                    "phoneNumber" = ($5),
-                    "avatar" = ($6)
-                    WHERE "email" = ($7)`;
+                    "firstName" = ($2),
+                    "lastName" = ($3),
+                    "phoneNumber" = ($4),
+                    "avatar" = ($5)
+                    WHERE "email" = ($6)`;
 
-        let data = [userInfo.address, userInfo.description, userInfo.firstName, userInfo.lastName, userInfo.phoneNumber, userInfo.avatar, userInfo.email];
+        let data = [userInfo.address, userInfo.firstName, userInfo.lastName, userInfo.phoneNumber, userInfo.avatar, userInfo.email];
         return this.pool.query(query, data);
     }
 

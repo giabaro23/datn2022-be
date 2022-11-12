@@ -26,7 +26,6 @@ router.put('/', async (req, res) => {
         } = req.userInfo;
         let {
             address,
-            description,
             phoneNumber,
             firstName,
             lastName,
@@ -35,7 +34,6 @@ router.put('/', async (req, res) => {
 
         let result = await usersServices.updateProfile({
             address,
-            description,
             phoneNumber,
             firstName,
             lastName,

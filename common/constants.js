@@ -7,10 +7,23 @@ exports.PG_CONFIG = {
 }
 
 exports.PG_DB = {
-    newdb: 'newdb',
     SCHEMA: 'public',
-    USERS_INFORMATION: 'Users'
-}
+    USERS_INFORMATION: 'Users',
+    CATEGORY: 'Category',
+    CONVERSATION: 'Conversation',
+    JOB_DETAIL: 'JobDetail',
+    JOB_INFORMATION: 'JobInformation',
+    LEVEL: 'Level',
+    MESSAGE: 'Message',
+    PAY_TYPE: 'PayType',
+    PERMISSION: 'Permission',
+    PROFILE_FREELANCER: 'ProfileFreelancer',
+    RATING: 'Rating',
+    ROLE: 'Role',
+    SAVE_JOB:'SaveJob',
+    WORK_TYPE: 'WorkType',
+    CATEGORY_DETAIL: 'CategoryDetail',
+} 
 
 exports.ACCESS_TOKEN_SECRET = 'test@gmail.com';
 

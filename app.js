@@ -17,12 +17,14 @@ app.use(bodyParser.urlencoded({
 const signup = require('./router/signup');
 const login = require('./router/login');
 const usersMgmt = require('./router/usersMgmt');
-const logout = require('./router/logout')
+const logout = require('./router/logout');
+const categoryMgmt = require('./router/categoryMgmt');
 
 let middleware = {
     checkToken: async function (req, res, next) {
         try {
             if (ignoreAuthentication(req)) return next();
+            if (ignoreAuthenticationGET(req)) return next();
             let token = req.body.token || req.headers['authorization'];
             if (!token || token === 'null' || token === 'undefined') {
                 return res.status(403).send('A token is requirement for authentication!')
@@ -52,6 +54,15 @@ let ignoreAuthentication = function (req) {
 
 };
 
+let ignoreAuthenticationGET = function (req) {
+    if (req.method === 'GET' && Object.keys(req.query).length == 0) {
+        return true;
+    } else {
+        return false;
+    }
+
+};
+
 
 const server = app.listen(PORT, function () {
     console.log('Node.js is listening to PORT:' + server.address().port);
@@ -60,7 +71,10 @@ const server = app.listen(PORT, function () {
 app.use(middleware.checkToken);
 
 // Implement api
+const apiUrl = '/api/v1/';
+
 app.use('/signup', signup);
 app.use('/login', login);
 app.use('/profile', usersMgmt);
-app.use('/logout',logout)
+app.use('/logout', logout);
+app.use('/category', categoryMgmt);

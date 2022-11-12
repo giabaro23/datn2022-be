@@ -15,7 +15,6 @@ router.post('/', async (req, res) => {
             email,
             password,
             address,
-            description,
             phoneNumber,
             firstName,
             lastName
@@ -27,7 +26,6 @@ router.post('/', async (req, res) => {
             email,
             password,
             address,
-            description,
             phoneNumber,
             firstName,
             lastName
@@ -58,7 +56,6 @@ router.post('/', async (req, res) => {
             email,
             newPassword,
             address,
-            description,
             phoneNumber,
             firstName,
             lastName
