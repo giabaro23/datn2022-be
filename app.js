@@ -19,6 +19,7 @@ const login = require('./router/login');
 const usersMgmt = require('./router/usersMgmt');
 const logout = require('./router/logout');
 const categoryMgmt = require('./router/categoryMgmt');
+const jobMgmt = require('./router/jobMgmt');
 
 let middleware = {
     checkToken: async function (req, res, next) {
@@ -78,3 +79,4 @@ app.use('/login', login);
 app.use('/profile', usersMgmt);
 app.use('/logout', logout);
 app.use('/category', categoryMgmt);
+app.use('/job',jobMgmt)
