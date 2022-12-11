@@ -8,7 +8,7 @@ class workType {
   init() {
     if (!this.pool) {
       this.pool = new pg.Pool(PG_CONFIG);
-      this.tableName = `${PG_DB.SCHEMA}."${PG_DB.SAVE_JOB}"`;
+      this.tableName = `${PG_DB.SCHEMA}."${PG_DB.WORK_TYPE}"`;
     }
   }
   save(workTypeInfo) {
