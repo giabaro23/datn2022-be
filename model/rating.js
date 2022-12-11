@@ -30,8 +30,7 @@ class rating {
   }
 
   update(ratingInfo) {
-    let query = `UPDATE ${this.tableName} SET "jobInformation" = ($1), "userId" = ($2), "rate" = ($3), 
-    "comment" = ($4)
+    let query = `UPDATE ${this.tableName} SET "jobInformation" = ($1), "userId" = ($2), "rate" = ($3), "comment" = ($4)
     WHERE "id" = ($5)`;
 
     let data = [
@@ -39,6 +38,7 @@ class rating {
       ratingInfo.userId,
       ratingInfo.rate,
       ratingInfo.comment,
+      ratingInfo.id,
     ];
     return this.pool.query(query, data);
   }

@@ -26,11 +26,11 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     // Handle create data
-    let { namWorkType } = req.body;
+    let { nameWorkType } = req.body;
 
     let result = await workTypeServices.create({
       id: uuidv4(),
-      namWorkType,
+      nameWorkType,
     });
     if (result) {
       console.log('[INFO]: Create workType successfully');
@@ -53,11 +53,11 @@ router.put('/', async (req, res) => {
   try {
     // Handle update data
     let { id } = req.query;
-    let { namWorkType } = req.body;
+    let { nameWorkType } = req.body;
 
     let result = await workTypeServices.update({
       id,
-      namWorkType,
+      nameWorkType,
     });
     if (result) {
       console.log('[INFO]: Update workType successfully');
