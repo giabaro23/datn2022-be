@@ -9,6 +9,7 @@ class profileFreelancer {
     if (!this.pool) {
       this.pool = new pg.Pool(PG_CONFIG);
       this.tableName = `${PG_DB.SCHEMA}."${PG_DB.PROFILE_FREELANCER}"`;
+      this.tableNameUser = `${PG_DB.SCHEMA}."${PG_DB.USERS_INFORMATION}"`;
     }
   }
   save(profileFreelancerInfo) {
@@ -48,7 +49,7 @@ class profileFreelancer {
       profileFreelancerInfo.levelId,
       profileFreelancerInfo.skills,
       profileFreelancerInfo.workTypeId,
-      profileFreelancerInfo.id
+      profileFreelancerInfo.id,
     ];
     return this.pool.query(query, data);
   }
@@ -57,6 +58,28 @@ class profileFreelancer {
     let query = `DELETE FROM ${this.tableName} WHERE "id" = ($1)`;
     let data = [profileFreelancerInfo.id];
 
+    return this.pool.query(query, data);
+  }
+
+  updatePassword(profileFreelancerInfo) {
+    let query = `UPDATE ${this.tableNameUser} SET "password" = ($1) WHERE "email" = ($2)`;
+    let data = [profileFreelancerInfo.password, profileFreelancerInfo.email];
+
+    return this.pool.query(query, data);
+  }
+
+  updateProfile(profileFreelancerInfo) {
+    let query = `UPDATE ${this.tableName} SET "description" = ($1), "linkProfile" = ($2), "major" = ($3), 
+    "levelId" = ($4),  "workTypeId" = ($5) WHERE "userId" = ($6)`;
+
+    let data = [
+      profileFreelancerInfo.description,
+      profileFreelancerInfo.linkProfile,
+      profileFreelancerInfo.major,
+      profileFreelancerInfo.levelId,
+      profileFreelancerInfo.workTypeId,
+      profileFreelancerInfo.id,
+    ];
     return this.pool.query(query, data);
   }
 }

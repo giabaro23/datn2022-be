@@ -2,6 +2,8 @@ const express = require('express');
 const router = express();
 const { v4: uuidv4 } = require('uuid');
 const { profileFreelancerServices } = require('../services/index');
+const { comparePassword, hashPassword } = require('../common/hashPassword');
+const { loginServices } = require('../services/index');
 
 router.get('/', async (req, res) => {
   try {
@@ -125,6 +127,88 @@ router.delete('/', async (req, res) => {
     });
   } catch (error) {
     console.log('[ERROR]: Delete profileFreelancer failed', error);
+    throw error;
+  }
+});
+
+router.put('/changePassword', async (req, res) => {
+  try {
+    let { email } = req.userInfo;
+    let { password, newPassword } = req.body;
+
+    if (password === newPassword) {
+      return res.status(400).json({
+        msg: 'Please enter new password difference current password!',
+      });
+    }
+
+    // Password with email
+    let result = await loginServices.getPassword({
+      email,
+    });
+
+    // Handle compare
+    let resultCompare = await comparePassword(password, result[0]?.password);
+    if (!resultCompare) {
+      return res.status(400).json({
+        msg: 'Please enter correct current password!',
+      });
+    }
+
+    let newPass;
+    await hashPassword(newPassword).then((res) => {
+      newPass = res;
+    });
+
+    let response = await profileFreelancerServices.updatePassword({
+      password: newPass,
+      email,
+    });
+
+    if (response) {
+      return res.status(200).json({
+        message: 'Change password successfully!',
+        result: true,
+      });
+    }
+
+    return res.status(200).json({
+      message: 'Failed',
+      result: false,
+    });
+  } catch (error) {
+    console.log('[ERROR]: Change password failed', error);
+    throw error;
+  }
+});
+
+router.put('/updateProfile', async (req, res) => {
+  try {
+    let { userId } = req.query;
+    let { description, linkProfile, major, levelId, workTypeId } = req.body;
+
+    let response = await profileFreelancerServices.updateProfile({
+      description,
+      linkProfile,
+      major,
+      levelId,
+      workTypeId,
+      id: userId
+    });
+
+    if (response) {
+      return res.status(200).json({
+        message: 'update profile freelancer successfully!',
+        result: true,
+      });
+    }
+
+    return res.status(200).json({
+      message: 'Failed',
+      result: false,
+    });
+  } catch (error) {
+    console.log('[ERROR]: update profile freelancer failed', error);
     throw error;
   }
 });

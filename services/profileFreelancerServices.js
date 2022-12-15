@@ -55,3 +55,31 @@ exports.delete = async (profileFreelancerInfo) => {
       throw new Error(error);
     });
 };
+
+exports.updatePassword = async (profileFreelancerInfo) => {
+  let profileFreelancer = new pg.profileFreelancer();
+  return await profileFreelancer
+    .updatePassword(profileFreelancerInfo)
+    .then((res) => {
+      console.log('[INFO]: Function updatePassword successfully');
+      return true;
+    })
+    .catch((error) => {
+      console.error('[ERROR]: Function updatePassword failed', error);
+      throw new Error(error);
+    });
+};
+
+exports.updateProfile = async (profileFreelancerInfo) => {
+  let profileFreelancer = new pg.profileFreelancer();
+  return await profileFreelancer
+    .updateProfile(profileFreelancerInfo)
+    .then((res) => {
+      console.log('[INFO]: Function updateProfile successfully');
+      return true;
+    })
+    .catch((error) => {
+      console.error('[ERROR]: Function updateProfile failed', error);
+      throw new Error(error);
+    });
+};
