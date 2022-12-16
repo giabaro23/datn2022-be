@@ -14,6 +14,19 @@ exports.updateProfile = async (userInfo) => {
             throw new Error(error);
         })
 }
+exports.editUser = async (userInfo) => {
+    userInfo.updateDate = moment().format();
+    let userInformation = new pg.userInformation();
+    return await userInformation
+        .editUser(userInfo)
+        .then((res) => {
+            return true;
+        })
+        .catch((error) => {
+            console.error(error);
+            throw new Error(error);
+        })
+}
 
 exports.getListUser = async () => {
     let userInformation = new pg.userInformation();

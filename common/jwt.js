@@ -6,7 +6,9 @@ const {
 exports.generateToken = async (userInfo) => {
     const accessToken = jwt.sign({
         userInfo
-    }, ACCESS_TOKEN_SECRET);
+    }, ACCESS_TOKEN_SECRET,{
+        expiresIn: '24h' 
+   });
     return accessToken;
 }
 

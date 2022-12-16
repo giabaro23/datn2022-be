@@ -28,6 +28,30 @@ exports.getListJob = async () => {
       throw new Error(error);
     });
 };
+exports.getJobById = async (id) => {
+  let jobInformation = new pg.jobInformation();
+  return await jobInformation
+    .getById(id)
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((error) => {
+      console.log(error);
+      throw new Error(error);
+    });
+};
+exports.getJobByUserId = async (userId) => {
+  let jobInformation = new pg.jobInformation();
+  return await jobInformation
+    .getListByUserId(userId)
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((error) => {
+      console.log(error);
+      throw new Error(error);
+    });
+};
 
 exports.updateJob = async (jobInfo) => {
   jobInfo.updateDate = moment().format();
@@ -45,7 +69,7 @@ exports.updateJob = async (jobInfo) => {
 
 exports.createJob = async (jobInfo) => {
   jobInfo.createDate = moment().format();
-  jobInfo.status = true;
+ 
   let jobInformation = new pg.jobInformation();
   return await jobInformation
     .save(jobInfo)

@@ -13,24 +13,24 @@ class jobInformation {
     }
   }
   save(jobInfo) {
-    let query = `INSERT INTO ${this.tableName} ("id", "userId","categoryId","workTypeId","payTypeId","name","description",
-        "salary","startDate","endDate","dueDate","createDate","status","location")
+    let query = `INSERT INTO ${this.tableName} ("id", "userId","topicName","workTypeName","payTypeName","name","description",
+        "salaryMin","salaryMax","dueDate","createDate","status","location","skills")
         VALUES ($1, $2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`;
     let data = [
       jobInfo.id,
       jobInfo.userId,
-      jobInfo.categoryId,
-      jobInfo.workTypeId,
-      jobInfo.payTypeId,
+      jobInfo.topicName,
+      jobInfo.workTypeName,
+      jobInfo.payTypeName,
       jobInfo.name,
       jobInfo.description,
-      jobInfo.salary,
-      jobInfo.startDate,
-      jobInfo.endDate,
+      jobInfo.salaryMin,
+      jobInfo.salaryMax,
       jobInfo.dueDate,
       jobInfo.createDate,
       jobInfo.status,
       jobInfo.location,
+      jobInfo.skills,
     ];
     return this.pool.query(query, data);
   }
@@ -38,6 +38,14 @@ class jobInformation {
   get() {
     let query = `SELECT * FROM ${this.tableName} ORDER BY "name"`;
     return this.pool.query(query);
+  }
+  getById(id) {
+    let query = `SELECT * FROM ${this.tableName} WHERE "id"=($1)`;
+    return this.pool.query(query, [id]);
+  }
+  getListByUserId(userId){
+    let query = `SELECT * FROM ${this.tableName} WHERE "userId"=($1)`;
+    return this.pool.query(query, [userId]);
   }
 
   update(jobInfo) {

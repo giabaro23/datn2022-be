@@ -57,6 +57,44 @@ router.put('/', async (req, res) => {
         throw error;
     }
 })
+router.put('/edit', async (req, res) => {
+    try {
+        let {
+           id
+        } = req.query;
+        let {
+            address,
+            phoneNumber,
+            firstName,
+            lastName,
+            avatar
+        } = req.body;
+
+        let result = await usersServices.editUser({
+            address,
+            phoneNumber,
+            firstName,
+            lastName,
+            avatar,
+            id
+        })
+
+        if (result) {
+            return res.status(200).json({
+                status: "success",
+                msg: "Update profile success"
+            })
+        }
+        return res.status(200).json({
+            status: "failed",
+            msg: "Update profile failed"
+        })
+
+    } catch (error) {
+        console.log('[ERROR]: Update profile failed', error);
+        throw error;
+    }
+})
 
 router.put('/lock', async (req, res) => {
     try {

@@ -1,8 +1,12 @@
 const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 const bodyParser = require('body-parser');
-const { verifyToken } = require('./common/jwt');
+const {
+  verifyToken
+} = require('./common/jwt');
+const cors = require('cors');
 
 app.use(bodyParser.json());
 app.use(
@@ -10,7 +14,6 @@ app.use(
     extended: true,
   })
 );
-
 // Implement router
 const signup = require('./router/signup');
 const login = require('./router/login');
@@ -28,6 +31,8 @@ const ratingMgmt = require('./router/ratingMgmt');
 const roleMgmt = require('./router/roleMgmt');
 const saveJobMgmt = require('./router/saveJobMgmt');
 const workTypeMgmt = require('./router/workTypeMgmt');
+app.use(cors());
+app.options('*', cors());
 
 let middleware = {
   checkToken: async function (req, res, next) {
@@ -77,6 +82,24 @@ const server = app.listen(PORT, function () {
 });
 
 app.use(middleware.checkToken);
+// app.use(cors({
+//   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+// }));
+
+// var corsOptions = {
+//   origin: '*',
+//   credentials: true };
+
+// app.use(cors(corsOptions));
+// app.use(cors({
+//   allowedHeaders: ['sessionId', 'Content-Type'],
+//   exposedHeaders: ['sessionId'],
+//   origin: '*',
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   preflightContinue: false,
+//   credentials: true
+// }));
+
 
 // Implement api
 const apiUrl = '/api/v1/';

@@ -8,17 +8,17 @@ router.post('/', async (req, res) => {
     // Handle permission role
     let {
       userId,
-      categoryId,
-      workTypeId,
-      payTypeId,
+      topicName,
+      workTypeName,
+      payTypeName,
       name,
       description,
-      salary,
-      startDate,
-      endDate,
+      salaryMin,
+      salaryMax,
       dueDate,
       status,
       location,
+      skills,
     } = req.body;
 
     // Handle create data
@@ -26,17 +26,17 @@ router.post('/', async (req, res) => {
     let rs = await jobServices.createJob({
       id: uuidv4(),
       userId,
-      categoryId,
-      workTypeId,
-      payTypeId,
+      topicName,
+      workTypeName,
+      payTypeName,
       name,
       description,
-      salary,
-      startDate,
-      endDate,
+      salaryMin,
+      salaryMax,
       dueDate,
       status,
       location,
+      skills,
     });
     return res.status(200).json({
       rs,
@@ -50,6 +50,26 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     let rs = await jobServices.getListJob();
+    return res.status(200).json(rs);
+  } catch (error) {
+    console.log('[ERROR]: Get job failed', error);
+    throw error;
+  }
+});
+router.get('/getById', async (req, res) => {
+  try {
+    let { id } = req.query;
+    let rs = await jobServices.getJobById(id);
+    return res.status(200).json(rs);
+  } catch (error) {
+    console.log('[ERROR]: Get job failed', error);
+    throw error;
+  }
+});
+router.get('/getByUserId', async (req, res) => {
+  try {
+    let { userId } = req.body;
+    let rs = await jobServices.getJobByUserId(userId);
     return res.status(200).json(rs);
   } catch (error) {
     console.log('[ERROR]: Get job failed', error);

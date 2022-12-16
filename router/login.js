@@ -11,6 +11,7 @@ const {
 } = require('../common/jwt')
 
 router.post('/', async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     try {
         let {
             email,
@@ -46,7 +47,7 @@ router.post('/', async (req, res) => {
             email: userInfo[0].email
         })
         return res.status(200).json({
-            token
+            token, userInfo
         })
 
     } catch (error) {

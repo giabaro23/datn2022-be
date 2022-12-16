@@ -17,7 +17,8 @@ router.post('/', async (req, res) => {
             address,
             phoneNumber,
             firstName,
-            lastName
+            lastName,
+            gender
         } = req.body;
 
         // Validate form
@@ -58,7 +59,8 @@ router.post('/', async (req, res) => {
             address,
             phoneNumber,
             firstName,
-            lastName
+            lastName, 
+            gender
         });
 
         if (result) {
